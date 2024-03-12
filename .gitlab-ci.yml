@@ -14,15 +14,11 @@ check-job:
 
 build-job:
   stage: build
+  before_script:
+    - cp ${ENV_FILE} .env
   script:
-    - >
-      docker login
-      -u $CI_REGISTRY_USER
-      -p $CI_JOB_TOKEN $CI_REGISTRY
-    - >
-      docker build
-      --build-arg INFISICAL_TOKEN=$INFISICAL_TOKEN
-      -t $CI_REGISTRY_IMAGE .
+    - docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build -t $CI_REGISTRY_IMAGE .
     - docker push $CI_REGISTRY_IMAGE
 
 deploy-job:
@@ -33,7 +29,6 @@ deploy-job:
       docker create
       --name $CI_PROJECT_PATH_SLUG
       --restart always
-      --env INFISICAL_TOKEN=$INFISICAL_TOKEN
       --label traefik.enable=true
       --label traefik.http.routers.$CI_PROJECT_PATH_SLUG.entrypoints=https
       --label traefik.http.routers.$CI_PROJECT_PATH_SLUG.rule='Host(`api.xn--299a1v27nvthhjj.com`)'
