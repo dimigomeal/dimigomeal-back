@@ -3,12 +3,12 @@ export * from "./config.module";
 export * from "./database.module";
 export * from "./schedule.module";
 
-import { CustomConfigModule } from "./config.module";
+import { ConfigModule } from "./config.module";
 import { DatabaseModule } from "./database.module";
 import { CustomScheduleModule } from "./schedule.module";
 
 export const EssentialModules = [
-  CustomConfigModule,
+  ConfigModule,
   DatabaseModule,
   CustomScheduleModule,
 ];

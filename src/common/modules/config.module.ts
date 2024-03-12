@@ -1,11 +1,13 @@
 import { Module } from "@nestjs/common";
-import { ConfigModule, ConfigModuleOptions } from "@nestjs/config";
+import {
+  ConfigModule as NestConfigModule,
+  ConfigModuleOptions,
+} from "@nestjs/config";
 
 export const options: ConfigModuleOptions = {
   isGlobal: true,
-  expandVariables: true,
-  ignoreEnvFile: true,
+  envFilePath: process.env.NODE_ENV == "development" ? ".env.dev" : ".env",
 };
 
-@Module({ imports: [ConfigModule.forRoot(options)] })
-export class CustomConfigModule {}
+@Module({ imports: [NestConfigModule.forRoot(options)] })
+export class ConfigModule {}

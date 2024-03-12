@@ -2,10 +2,10 @@ import { Module } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { MongooseModule, MongooseModuleAsyncOptions } from "@nestjs/mongoose";
 
-import { CustomConfigModule } from "./config.module";
+import { ConfigModule } from "./config.module";
 
 export const Mongooseoptions: MongooseModuleAsyncOptions = {
-  imports: [CustomConfigModule],
+  imports: [ConfigModule],
   useFactory: async (configService: ConfigService) => ({
     uri: configService.get<string>("MONGO_URI"),
     dbName: "dimigomeal",
